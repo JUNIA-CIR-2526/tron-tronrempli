@@ -1,7 +1,6 @@
 package com.jad;
 
 import com.jad.textwindow.TextWindow;
-
 public class Game {
     private final int width;
     private final int height;
@@ -48,6 +47,10 @@ public class Game {
         player1.move();
         player2.move();
 
+        // Appliquer le wraparound (passage à travers les murs)
+        wrapPosition(player1);
+        wrapPosition(player2);
+
         // Vérifier les collisions
         boolean p1Collision = checkCollision(player1);
         boolean p2Collision = checkCollision(player2);
@@ -64,14 +67,31 @@ public class Game {
         }
     }
 
-    private boolean checkCollision(LightCycle cycle) {
+    private void wrapPosition(LightCycle cycle) {
         int x = cycle.getX();
         int y = cycle.getY();
 
-        // Collision avec les murs
-        if (x < 0 || x >= width || y < 0 || y >= height) {
-            return true;
+        // Wraparound horizontal
+        if (x < 0) {
+            x = width - 1;
+        } else if (x >= width) {
+            x = 0;
         }
+
+        // Wraparound vertical
+        if (y < 0) {
+            y = height - 1;
+        } else if (y >= height) {
+            y = 0;
+        }
+
+        // Mettre à jour la position du cycle
+        cycle.setPosition(x, y);
+    }
+
+    private boolean checkCollision(LightCycle cycle) {
+        int x = cycle.getX();
+        int y = cycle.getY();
 
         // Collision avec une traînée (la sienne ou celle de l'autre)
         if (grid[y][x] != ' ') {
@@ -92,7 +112,7 @@ public class Game {
         // Dessiner chaque ligne
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                // Bordures
+                // Bordures (maintenant juste visuelles)
                 if (x == 0 || x == width - 1 || y == 0 || y == height - 1) {
                     display.append('#');
                 }
