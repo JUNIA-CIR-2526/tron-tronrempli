@@ -19,10 +19,10 @@ public enum Main {
         settings.addKeyboardListener(KeyEvent.VK_S, "p1_down");
 
         // Joueur 2 : Flèches
-        settings.addKeyboardListener(KeyEvent.VK_LEFT, "p2_left");
-        settings.addKeyboardListener(KeyEvent.VK_RIGHT, "p2_right");
-        settings.addKeyboardListener(KeyEvent.VK_UP, "p2_up");
-        settings.addKeyboardListener(KeyEvent.VK_DOWN, "p2_down");
+        settings.addKeyboardListener(KeyEvent.VK_K, "p2_left");
+        settings.addKeyboardListener(KeyEvent.VK_M, "p2_right");
+        settings.addKeyboardListener(KeyEvent.VK_O, "p2_up");
+        settings.addKeyboardListener(KeyEvent.VK_L, "p2_down");
 
         TextWindow tw = new TextWindow(settings);
         tw.setVisible(true);
